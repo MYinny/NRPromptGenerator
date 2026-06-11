@@ -8,9 +8,19 @@ A small static web app for generating ComfyUI-ready prompt sections for Naomi ca
 - Lets you lock any section you like and reroll the rest.
 - Lets you reroll an individual section without changing everything else.
 - Provides copy/paste sections for ComfyUI v7/v8 workflows.
-- Includes a larger starter bank of 24 logical style sets across indoor, outdoor, beach, pool, yacht, rooftop, gym, office, city, lodge, café, gallery, and more.
+- Includes a larger starter bank of **48 logical style sets** across indoor, outdoor, beach, pool, yacht, rooftop, gym, office, city, lodge, café, gallery, resort, street, and more.
+- Adds stronger full-body / three-quarter-body / varied-angle guidance to reduce waist-up-only outputs.
 - Includes an expandable prompt bank saved in browser `localStorage`.
 - Runs entirely in the browser — no backend or API key required.
+
+## Important after update
+
+The app now uses `localStorage` key `naomiPromptDirector.v2`. If your browser still shows the old small bank, hard refresh:
+
+- Windows: `Ctrl + F5`
+- Mac: `Cmd + Shift + R`
+
+Or clear site data/localStorage.
 
 ## How to run locally
 
@@ -54,4 +64,5 @@ Use this app as the prompt director, then paste the generated sections into your
 
 - **Smart style set** chooses matched wardrobe/environment/lighting from the same logical pack.
 - **Independent random** mixes categories more aggressively and may produce less coherent combos.
+- The vibe dropdown now shows how many packs exist for that vibe.
 - Custom packs are stored in your browser only. Export/import JSON is a planned next improvement.
