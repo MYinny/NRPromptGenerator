@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Naomi Prompt Director</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">ComfyUI prompt companion</p>
+      <h1>Naomi Prompt Director</h1>
+      <p class="sub">Generate logical wardrobe, environment, lighting and control prompts for your v7/v8 workflow. Lock what you like, reroll what you don’t.</p>
+    </div>
+    <div class="top-actions">
+      <button id="randomizeAll" class="primary">Randomize unlocked</button>
+      <button id="copyAll" class="secondary">Copy all sections</button>
+      <button id="saveState" class="ghost">Save</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel controls">
+      <h2>Campaign controls</h2>
+      <label class="field">
+        <span>Audience / Vibe</span>
+        <select id="vibeSelect"></select>
+      </label>
+      <label class="field">
+        <span>Logic mode</span>
+        <select id="logicMode">
+          <option value="pack">Smart style set — matched wardrobe + environment + light</option>
+          <option value="independent">Independent random — maximum discovery</option>
+          <option value="hybrid">Hybrid — keep locked sections, smart-fill others</option>
+        </select>
+      </label>
+      <label class="field inline">
+        <input id="keepConsistency" type="checkbox" checked />
+        <span>Append consistency locks: same outfit, same location, same lighting</span>
+      </label>
+      <label class="field inline">
+        <input id="antiCollage" type="checkbox" checked />
+        <span>Append single-photo / anti-collage language</span>
+      </label>
+      <div class="hint">
+        <strong>Best workflow:</strong> start with Smart style set. If you like one section, lock it. Then reroll unlocked sections or copy the prompts into v7’s one-click panel.
+      </div>
+    </section>
+
+    <section class="cards" id="sectionCards"></section>
+
+    <section class="panel output-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Copy into ComfyUI</h2>
+          <p>Paste these into v7/v8’s matching fields.</p>
+        </div>
+        <button id="copyCombined" class="secondary">Copy formatted block</button>
+      </div>
+      <pre id="combinedOutput"></pre>
+    </section>
+
+    <section class="panel library-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Expandable bank</h2>
+          <p>Add your own logical style set. It saves in this browser via localStorage.</p>
+        </div>
+      </div>
+      <div class="library-form">
+        <input id="newPackName" placeholder="Set name e.g. Beach sunset bikini" />
+        <textarea id="newWardrobe" placeholder="Wardrobe prompt starting with wearing..."></textarea>
+        <textarea id="newEnvironment" placeholder="Environment prompt starting with in / on / at..."></textarea>
+        <textarea id="newLighting" placeholder="Lighting/style prompt..."></textarea>
+        <textarea id="newNotes" placeholder="Optional logic tags/notes e.g. beach, sunset, swimwear"></textarea>
+        <button id="addPack" class="primary">Add style set to bank</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast">Copied</div>
+  <script src="app.js"></script>
+</body>
+</html>
