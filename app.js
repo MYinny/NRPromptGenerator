@@ -51,6 +51,15 @@ const palettes = {
   'fresh-lifestyle':['white','cream','sage green','sand beige','navy blue','coral','sky blue','olive green','black']
 };
 
+const guidanceBanks = {
+  briefMood:['upscale lifestyle shoot','premium social-media shoot','candid editorial lifestyle shoot','high-retention influencer photo shoot','polished creator campaign shoot','natural luxury lifestyle session'],
+  briefEnergy:['confident eye contact','warm magnetic presence','tasteful sensuality','playful confidence','quiet seductive energy','relaxed premium confidence','approachable but elevated mood'],
+  timeMood:['soft morning light','late-afternoon glow','golden-hour warmth','moody evening atmosphere','clean daylight realism','blue-hour city mood','warm indoor ambience'],
+  gaze:['direct eye contact with the camera, eyes near the lens, warm magnetic connection, soft half-smile','playful smirk, expressive eyes, direct connection with the lens, relaxed confident presence','soft smile, calm closed-mouth expression, inviting serious gaze, natural eye contact','subtle laugh, warm eyes, candid in-between expression, still aware of the camera','confident model-like gaze, slight chin tilt, relaxed mouth, strong lens connection'],
+  rear:['three-quarter rear body orientation with her face turned back toward the camera, waist and hip line emphasized tastefully','side-view pose with one shoulder closer to camera, face visible, eye contact maintained','walking-away pose with face turned back toward the lens, full outfit and legs visible','over-the-shoulder pose, torso angled away, eyes back to camera, tasteful silhouette emphasis','seated side angle with legs and shoes visible, torso turned toward camera, expressive eyes'],
+  variety:['include one full-body outfit read with shoes visible, one three-quarter-body portrait, one wider environmental shot, and one closer editorial crop','vary camera distance, low angle, eye-level angle, slight high angle, crop, body orientation, hand placement and expression between photos','prioritize full-body and three-quarter-body compositions before waist-up crops; avoid repeating the same standing pose','create distinct photos from the same shoot: walking pose, seated/candid pose, side-angle pose, and close editorial portrait','make each image feel like a different moment from the same session, with varied distance, gaze, expression, and environment visibility']
+};
+
 const defaults = {locks:{wardrobe:false,environment:false,lighting:false,brief:false,gaze:false,rear:false,variety:false}, selected:{}, logicMode:'pack', vibe:'seductive-luxury', keepConsistency:true, antiCollage:true, randomizeOutfitColor:true, customPacks:[]};
 let state = load();
 const pick = a => a[Math.floor(Math.random()*a.length)];
@@ -58,10 +67,10 @@ function load(){try{return {...defaults,...(JSON.parse(localStorage.getItem(STOR
 function save(){localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); toastMsg('Saved')}
 function envPool(){ if(state.vibe==='fitness-lifestyle') return banks.environment.fitness; if(['summer-sultry','fresh-lifestyle'].includes(state.vibe)) return banks.environment.outdoor; if(state.vibe==='bold-nightlife') return [...banks.environment.indoor,...banks.environment.outdoor]; return [...banks.environment.indoor,...banks.environment.outdoor]; }
 function guidance(){return {
-  brief:vibes[state.vibe],
-  gaze:'confident engaging presence, direct eye contact with the camera, eyes near the lens, warm magnetic connection, varied expressions including soft smile, playful half-smile, subtle smirk, relaxed laugh, calm closed-mouth smile, and inviting serious gaze',
-  rear:'favor a mix of full-body angles: side view, three-quarter rear, over-the-shoulder body orientation, walking-away-with-face-turned-back, and seated side angle; keep her face visible and eye contact alive even when her body faces away',
-  variety:'prioritize full-body and three-quarter-body compositions before waist-up crops; vary camera distance, low angle, eye-level angle, slight high angle, body orientation, crop, hand placement, gaze, and expression between photos; include at least one full-body outfit read with shoes visible and one wider environmental shot; no repeated pose or composition'
+  brief:`${pick(guidanceBanks.briefMood)}, ${pick(guidanceBanks.timeMood)}, ${pick(guidanceBanks.briefEnergy)}, ${vibes[state.vibe]}`,
+  gaze:`${pick(guidanceBanks.gaze)}, varied expressions across the set`,
+  rear:`favor ${pick(guidanceBanks.rear)}; keep her face visible and eye contact alive even when her body faces away`,
+  variety:`${pick(guidanceBanks.variety)}; no repeated pose or composition`
 }}
 function wardrobe(){ const color=state.randomizeOutfitColor?pick(palettes[state.vibe]||palettes['seductive-luxury']):''; return `wearing a ${color?color+' ':''}${pick(banks.wardrobe[state.vibe]||banks.wardrobe['seductive-luxury'])}, flattering fitted silhouette, tasteful styling`; }
 function augment(k,t){ if(!state.keepConsistency) return t; if(k==='wardrobe') return t+', same outfit throughout the photoshoot'; if(k==='environment') return t+', same location throughout the photoshoot'; if(k==='lighting') return t+', same lighting direction and color grade throughout the photoshoot'; return t; }
